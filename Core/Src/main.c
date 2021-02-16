@@ -99,6 +99,7 @@ int main(void)
 
 
 
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -137,8 +138,16 @@ int main(void)
 
 		  if(SwitchState1[1]== GPIO_PIN_SET && SwitchState1[0] == GPIO_PIN_RESET)
 		  {
-
+			  if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_7)==GPIO_PIN_SET)
+			  {
+				  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);   //ปิดไฟ
+			  }
+			  else
+			  {
+			  	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);   //เปิดไฟ
+			  }
 		  }
+		  SwitchState1[1] = SwitchState1[0];
 	  }
 	  if(HAL_GetTick() - TimeStamp >= LED1_HalfPeriod) //บรรทัดเอ้าพุตหรือเขียน.write LED
 		                                                                                  //ปรับให้การเเสดง output มันเปลี่ยน เช่น เปลี่ยน output เร็วขึ้น หรือ เปลี่ยน output ช้าลงตามคำสั่งด่้านบน
