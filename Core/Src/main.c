@@ -96,6 +96,9 @@ int main(void)
   uint32_t TimeStamp = 0;
   uint32_t ButtonTimeStamp = 0;
   uint32_t mode = 0;
+  uint32_t TimeStamp1 = 0;
+  uint16_t Timercurcuit1 = 500;
+  uint32_t count = 0;
 
 
 
@@ -178,6 +181,30 @@ int main(void)
 		  }
 	  }
 	  HAL_GetTick(); //mS
+
+	  if(mode == 0)
+	  {
+		  if(count == 0)
+		  {
+			  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+			  count = 1;
+		  }
+		  if(HAL_GetTick() - TimeStamp1 >= Timercurcuit1)
+		  {
+			  TimeStamp1 = HAL_GetTick();
+			  if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == GPIO_PIN_SET)
+			  {
+				  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+				  Timercurcuit1 = 1500;
+			  }
+			  else
+			  {
+				  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
+				  Timercurcuit1 = 500;
+			  }
+		  }
+	  }
+
 
 
   }
