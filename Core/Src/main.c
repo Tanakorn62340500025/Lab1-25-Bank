@@ -119,18 +119,19 @@ int main(void)
 	  		  {
 	  			  LED1_HalfPeriod = 500;
 	  		  }
-	  		  if(LED1_HalfPeriod == 500)
+	  		  else if(LED1_HalfPeriod == 500)
 	  		  {
 	  			  LED1_HalfPeriod = 250;
 	  		  }
-	  		  if(LED1_HalfPeriod == 250)
+	  		  else if(LED1_HalfPeriod == 250)
 	  		  {
 	  			  LED1_HalfPeriod = 500/3;
 	  		  }
-	  		  if(LED1_HalfPeriod == 500/3)
+	  		  else
 	  		  {
 	  			  LED1_HalfPeriod = 1000;
 	  		  }
+
 		  }
 		  SwitchState[1] = SwitchState[0];
 
