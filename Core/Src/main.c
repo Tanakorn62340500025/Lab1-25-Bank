@@ -154,9 +154,6 @@ int main(void)
 	  HAL_GetTick(); //mS
 
 
-
-
-
   }
   /* USER CODE END 3 */
 }
