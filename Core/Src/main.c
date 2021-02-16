@@ -199,7 +199,7 @@ int main(void)
 			  }
 			  else
 			  {
-				  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
+				  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
 				  Timercurcuit1 = 500;
 			  }
 		  }
