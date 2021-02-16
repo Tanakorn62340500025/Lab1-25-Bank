@@ -92,6 +92,7 @@ int main(void)
 
   GPIO_PinState SwitchState[2]; //Now,Last
   GPIO_PinState SwitchState1[2]; //Now,Last
+  //GPIO_PinState SwitchState2[2]; //Now,Last
   uint16_t LED1_HalfPeriod = 1000; //hz
   uint32_t TimeStamp = 0;
   uint32_t ButtonTimeStamp = 0;
@@ -118,10 +119,11 @@ int main(void)
 		  ButtonTimeStamp = HAL_GetTick();
 		  SwitchState[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10);
 		  SwitchState1[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_3);
-		  SwitchState2[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
-		  if(SwitchState[1] == GPIO_PIN_SET && SwitchState[0] == GPIO_PIN_RESET) //กดสวิสต์เเล้วความเร็วไฟกระพริบจะเปลี่ยนกดครั้งนึงก็เปลี่ยนกดครั้งนึงก็เปลี่ยน
+		  //HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
+		  //SwitchState2[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
+		  if(SwitchState[1] == GPIO_PIN_SET && SwitchState[0] == GPIO_PIN_RESET) //�?ดสวิสต์เเล้วความเร็วไฟ�?ระพริบจะเปลี่ยน�?ดครั้งนึง�?็เปลี่ยน�?ดครั้งนึง�?็เปลี่ยน
 		  {
-	  		  if(LED1_HalfPeriod == 1000)                       //ตัวเเปรที่เก็บค่า เวลา ไว้เฉยๆเพื่อให้เวลาไปที่อยู่ในตัวเเปรนั้นไปใช้ใน if ข้างล่าง
+	  		  if(LED1_HalfPeriod == 1000)                       //ตัวเเปรที่เ�?็บค่า เวลา ไว้เฉยๆเพื่อให้เวลาไปที่อยู่ในตัวเเปรนั้นไปใช้ใน if ข้างล่าง
 	  		  {
 	  			  LED1_HalfPeriod = 500;
 	  		  }
@@ -154,20 +156,21 @@ int main(void)
 		  }
 		  SwitchState1[1] = SwitchState1[0];
 
-		  if(SwitchState2[1] == GPIO_PIN_SET && SwitchState2[0] == GPIO_PIN_RESET)
-		  {
-			  if(mode == 0)
-			  {
-				  mode = 1;
-			  }
-			  else
-			  {
-				  mode = 0;
-			  }
-		  }
+		  //if(SwitchState2[1] == GPIO_PIN_SET && SwitchState2[0] == GPIO_PIN_RESET)
+		  //{
+			  //if(mode == 0)
+			  //{
+				  //mode = 1;
+			  //}
+			  //else
+			  //{
+				  //mode = 0;
+			  //}
+		  //}
+		  //SwitchState2[1] = SwitchState2[0];
 	  }
 	  if(HAL_GetTick() - TimeStamp >= LED1_HalfPeriod) //บรรทัดเอ้าพุตหรือเขียน.write LED
-		                                                                                  //ปรับให้การเเสดง output มันเปลี่ยน เช่น เปลี่ยน output เร็วขึ้น หรือ เปลี่ยน output ช้าลงตามคำสั่งด่้านบน
+		                                                                                  //ปรับให้�?ารเเสดง output มันเปลี่ยน เช่น เปลี่ยน output เร็วขึ้น หรือ เปลี่ยน output ช้าลงตามคำสั่งด่้านบน
 		                                                                                  //สั่งเปิดปิด switch
 	  {
 		  TimeStamp = HAL_GetTick();
@@ -186,24 +189,25 @@ int main(void)
 	  {
 		  if(count == 0)
 		  {
-			  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
 			  count = 1;
 		  }
 		  if(HAL_GetTick() - TimeStamp1 >= Timercurcuit1)
 		  {
 			  TimeStamp1 = HAL_GetTick();
-			  if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == GPIO_PIN_SET)
+			  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == GPIO_PIN_RESET)
 			  {
-				  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+				  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
 				  Timercurcuit1 = 1500;
 			  }
 			  else
 			  {
-				  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+				  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
 				  Timercurcuit1 = 500;
 			  }
 		  }
 	  }
+
 
 
 
@@ -304,7 +308,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LD2_Pin|GPIO_PIN_9, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LD2_Pin|GPIO_PIN_7|GPIO_PIN_9, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
@@ -318,8 +322,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD2_Pin PA9 */
-  GPIO_InitStruct.Pin = LD2_Pin|GPIO_PIN_9;
+  /*Configure GPIO pins : LD2_Pin PA7 PA9 */
+  GPIO_InitStruct.Pin = LD2_Pin|GPIO_PIN_7|GPIO_PIN_9;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -338,8 +342,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB3 PB5 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_5;
+  /*Configure GPIO pins : PB3 PB4 PB5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
