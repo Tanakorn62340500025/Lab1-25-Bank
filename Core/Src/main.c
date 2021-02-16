@@ -140,6 +140,7 @@ int main(void)
 		  //}
 	  }
 	  if(HAL_GetTick() - TimeStamp >= LED1_HalfPeriod) //บรรทัดเอ้าพุตหรือเขียน.write LED
+		                                                                                  //ปรับให้การเเสดง output มันเปลี่ยน เช่น เปลี่ยน output เร็วขึ้น หรือ เปลี่ยน output ช้าลงตามคำสั่งด่้านบน
 	  {
 		  TimeStamp = HAL_GetTick();
 		  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9)==GPIO_PIN_SET)
