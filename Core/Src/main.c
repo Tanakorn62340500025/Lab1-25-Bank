@@ -115,7 +115,7 @@ int main(void)
 		  //SwitchState1[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_3);
 		  if(SwitchState[1]== GPIO_PIN_SET && SwitchState[0] == GPIO_PIN_RESET) //กดสวิสต์เเล้วความเร็วไฟกระพริบจะเปลี่ยนกดครั้งนึงก็เปลี่ยนกดครั้งนึงก็เปลี่ยน
 		  {
-	  		  if(LED1_HalfPeriod == 1000)
+	  		  if(LED1_HalfPeriod == 1000)                       //ตัวเเปรที่เก็บค่า เวลา ไว้เฉยๆเพื่อให้เวลาไปที่อยู่ในตัวเเปรนั้นไปใช้ใน if ข้างล่าง
 	  		  {
 	  			  LED1_HalfPeriod = 500;
 	  		  }
@@ -142,6 +142,7 @@ int main(void)
 	  }
 	  if(HAL_GetTick() - TimeStamp >= LED1_HalfPeriod) //บรรทัดเอ้าพุตหรือเขียน.write LED
 		                                                                                  //ปรับให้การเเสดง output มันเปลี่ยน เช่น เปลี่ยน output เร็วขึ้น หรือ เปลี่ยน output ช้าลงตามคำสั่งด่้านบน
+		                                                                                  //สั่งเปิดปิด switch
 	  {
 		  TimeStamp = HAL_GetTick();
 		  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9)==GPIO_PIN_SET)
