@@ -139,7 +139,19 @@ int main(void)
 
 		  //}
 	  }
-
+	  if(HAL_GetTick() - TimeStamp >= LED1_HalfPeriod) //บรรทัดเอ้าพุตหรือเขียน.write LED
+	  {
+		  TimeStamp = HAL_GetTick();
+		  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9)==GPIO_PIN_SET)
+		  {
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
+		  }
+		  else
+		  {
+		  	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
+		  }
+	  }
+	  HAL_GetTick(); //mS
 
 
 
