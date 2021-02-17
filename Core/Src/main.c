@@ -212,28 +212,28 @@ int main(void)
 		  }
 	  }
 
-	  else if(mode == 1)
+	  if(mode == 1)
+	  {
+		  if(count2 == 0)
 	  	  {
-	  		  if(count2 == 0)
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
+	  		  count2 = 1;
+	  	  }
+	  	  if(HAL_GetTick() - TimeStamp2 >= Timercurcuit2)
+	  	  {
+	  		  TimeStamp2 = HAL_GetTick();
+	  		  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == GPIO_PIN_RESET)
+	  		  {
+	  			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
+	  			  Timercurcuit2 = 500;
+	  		  }
+	  		  else
 	  		  {
 	  			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
-	  			  count2 = 1;
-	  		  }
-	  		  if(HAL_GetTick() - TimeStamp2 >= Timercurcuit2)
-	  		  {
-	  			  TimeStamp2 = HAL_GetTick();
-	  			  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == GPIO_PIN_RESET)
-	  			  {
-	  				  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
-	  				  Timercurcuit2 = 500;
-	  			  }
-	  			  else
-	  			  {
-	  				  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
-	  				  Timercurcuit2 = 1500;
-	  			  }
+	  			  Timercurcuit2 = 1500;
 	  		  }
 	  	  }
+	   }
 
 
 
