@@ -92,7 +92,7 @@ int main(void)
 
   GPIO_PinState SwitchState[2]; //Now,Last
   GPIO_PinState SwitchState1[2]; //Now,Last
-  //GPIO_PinState SwitchState2[2]; //Now,Last
+  GPIO_PinState SwitchState2[2]; //Now,Last
   uint16_t LED1_HalfPeriod = 1000; //hz
   uint32_t TimeStamp = 0;
   uint32_t ButtonTimeStamp = 0;
@@ -100,6 +100,9 @@ int main(void)
   uint32_t TimeStamp1 = 0;
   uint16_t Timercurcuit1 = 500;
   uint32_t count = 0;
+  uint32_t TimeStamp2 = 0;
+  uint16_t Timercurcuit2 = 1500;
+  uint32_t count2 = 0;
 
 
 
@@ -120,8 +123,8 @@ int main(void)
 		  SwitchState[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10);
 		  SwitchState1[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_3);
 		  //HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
-		  //SwitchState2[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+		  SwitchState2[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
+		  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET); D5เสีย
 		  if(SwitchState[1] == GPIO_PIN_SET && SwitchState[0] == GPIO_PIN_RESET) //�?ดสวิสต์เเล้วความเร็วไฟ�?ระพริบจะเปลี่ยน�?ดครั้งนึง�?็เปลี่ยน�?ดครั้งนึง�?็เปลี่ยน
 		  {
 	  		  if(LED1_HalfPeriod == 1000)                       //ตัวเเปรที่เ�?็บค่า เวลา ไว้เฉยๆเพื่อให้เวลาไปที่อยู่ในตัวเเปรนั้นไปใช้ใน if ข้างล่าง
@@ -157,18 +160,18 @@ int main(void)
 		  }
 		  SwitchState1[1] = SwitchState1[0];
 
-		  //if(SwitchState2[1] == GPIO_PIN_SET && SwitchState2[0] == GPIO_PIN_RESET)
-		  //{
-			  //if(mode == 0)
-			  //{
-				  //mode = 1;
-			  //}
-			  //else
-			  //{
-				  //mode = 0;
-			  //}
-		  //}
-		  //SwitchState2[1] = SwitchState2[0];
+		  if(SwitchState2[1] == GPIO_PIN_SET && SwitchState2[0] == GPIO_PIN_RESET)
+		  {
+			  if(mode == 0)
+			  {
+				  mode = 1;
+			  }
+			  else
+			  {
+				  mode = 0;
+			  }
+		  }
+		  SwitchState2[1] = SwitchState2[0];
 	  }
 	  if(HAL_GetTick() - TimeStamp >= LED1_HalfPeriod) //บรรทัดเอ้าพุตหรือเขียน.write LED
 		                                                                                  //ปรับให้�?ารเเสดง output มันเปลี่ยน เช่น เปลี่ยน output เร็วขึ้น หรือ เปลี่ยน output ช้าลงตามคำสั่งด่้านบน
@@ -208,6 +211,29 @@ int main(void)
 			  }
 		  }
 	  }
+
+	  else if(mode == 1)
+	  	  {
+	  		  if(count2 == 0)
+	  		  {
+	  			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
+	  			  count2 = 1;
+	  		  }
+	  		  if(HAL_GetTick() - TimeStamp2 >= Timercurcuit2)
+	  		  {
+	  			  TimeStamp2 = HAL_GetTick();
+	  			  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == GPIO_PIN_RESET)
+	  			  {
+	  				  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
+	  				  Timercurcuit2 = 500;
+	  			  }
+	  			  else
+	  			  {
+	  				  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
+	  				  Timercurcuit2 = 1500;
+	  			  }
+	  		  }
+	  	  }
 
 
 
